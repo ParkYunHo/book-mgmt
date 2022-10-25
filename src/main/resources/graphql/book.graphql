@@ -1,0 +1,17 @@
+scalar Date
+schema {
+    query: Query
+}
+
+type Query {
+    book(bookId: String): Book
+}
+
+type Book {
+     bookId: String
+     genreCode: String
+     genreDesc: String
+     bookName: String
+     updatedAt: Date
+     createdAt: Date
+}

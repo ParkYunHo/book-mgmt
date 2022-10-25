@@ -1,8 +1,5 @@
 package com.john.bookmgmt.api
 
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.john.bookmgmt.dto.BookDto
-import com.john.bookmgmt.dto.GenreDto
 import com.john.bookmgmt.entity.Book
 import com.john.bookmgmt.entity.Genre
 import com.john.bookmgmt.repository.BookRepository
@@ -14,7 +11,6 @@ import org.junit.jupiter.api.TestInstance
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
@@ -29,7 +25,7 @@ import java.time.LocalDateTime
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-internal class BookControllerTest {
+internal class BookControllerFailTest {
     @Autowired
     private lateinit var mockMvc: MockMvc
 
@@ -50,15 +46,15 @@ internal class BookControllerTest {
             genre = Genre("GA001", "시", "동시"),
             bookName = "아기잠",
             updatedAt = LocalDateTime.now()
-        ))
+        ));
     }
 
     @Test
-    @DisplayName("1. 조회 성공테스트")
-    fun TEST_find() {
+    @DisplayName("1. 조회 실패테스트")
+    fun TEST_find_fail() {
         // Given
-        val bookId = "B001"
-        val genreCode = "GA001"
+        val bookId = "TEST"
+        val genreCode = "TEST"
 
         // When
         val builder1: MockHttpServletRequestBuilder = MockMvcRequestBuilders
@@ -71,19 +67,19 @@ internal class BookControllerTest {
         // then1 : 도서조회
         mockMvc.perform(builder1)
             .andDo(MockMvcResultHandlers.print())
-            .andExpect(MockMvcResultMatchers.status().is2xxSuccessful)
+            .andExpect(MockMvcResultMatchers.status().is4xxClientError)
         // then2 : 장르조회
         mockMvc.perform(builder2)
             .andDo(MockMvcResultHandlers.print())
-            .andExpect(MockMvcResultMatchers.status().is2xxSuccessful)
+            .andExpect(MockMvcResultMatchers.status().is4xxClientError)
     }
 
     @Test
-    @DisplayName("2. 삭제 성공테스트")
-    fun TEST_delete() {
+    @DisplayName("2. 삭제 실패테스트")
+    fun TEST_delete_fail() {
         // Given
-        val bookId = "B001"
-        val genreCode = "GA001"
+        val bookId = "TEST"
+        val genreCode = "TEST"
 
         // When
         val builder1: MockHttpServletRequestBuilder = MockMvcRequestBuilders
@@ -96,59 +92,10 @@ internal class BookControllerTest {
         // then1 : 도서조회
         mockMvc.perform(builder1)
             .andDo(MockMvcResultHandlers.print())
-            .andExpect(MockMvcResultMatchers.status().is2xxSuccessful)
+            .andExpect(MockMvcResultMatchers.status().is4xxClientError)
         // then2 : 장르조회
         mockMvc.perform(builder2)
             .andDo(MockMvcResultHandlers.print())
-            .andExpect(MockMvcResultMatchers.status().is2xxSuccessful)
-    }
-
-    @Test
-    @DisplayName("3. 도서 저장 성공테스트")
-    fun TEST_saveBook() {
-        // Given
-        val input = BookDto(
-            bookId = "B001",
-            genreCode = "GA001",
-            bookName = "아기잠",
-            genreSubCategory = null, genreMainCategory = null, updatedAt = null, createdAt = null
-        )
-        val om = ObjectMapper()
-        val param = om.writeValueAsString(input)
-
-        // When
-        val builder: MockHttpServletRequestBuilder = MockMvcRequestBuilders
-            .post("/api/book")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(param)
-
-        // then
-        mockMvc.perform(builder)
-            .andDo(MockMvcResultHandlers.print())
-            .andExpect(MockMvcResultMatchers.status().is2xxSuccessful)
-    }
-
-    @Test
-    @DisplayName("4. 장르 저장 성공테스트")
-    fun TEST_saveGenre() {
-        // Given
-        val input = GenreDto(
-            genreCode = "GA001",
-            genreMainCategory = "시",
-            genreSubCategory = "동시"
-        )
-        val om = ObjectMapper()
-        val param = om.writeValueAsString(input)
-
-        // When
-        val builder: MockHttpServletRequestBuilder = MockMvcRequestBuilders
-            .post("/api/genre")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(param)
-
-        // then
-        mockMvc.perform(builder)
-            .andDo(MockMvcResultHandlers.print())
-            .andExpect(MockMvcResultMatchers.status().is2xxSuccessful)
+            .andExpect(MockMvcResultMatchers.status().is4xxClientError)
     }
 }
