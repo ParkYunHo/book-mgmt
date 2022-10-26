@@ -1,0 +1,8 @@
+
+query findGenre($genreCode: String){
+     findGenre(genreCode: $genreCode){
+          genreCode
+          genreMainCategory
+          genreSubCategory
+     }
+}

@@ -1,0 +1,4 @@
+
+mutation deleteGenre($genreCode: String){
+     deleteGenre(genreCode: $genreCode)
+}
