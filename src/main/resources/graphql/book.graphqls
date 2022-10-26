@@ -1,0 +1,45 @@
+
+type Query {
+     findBook(bookId: String): Book
+     findGenre(genreCode: String): Genre
+}
+
+type Mutation {
+     saveBook(input: BookInput): Book
+     saveGenre(input: GenreInput): Genre
+     deleteBook(bookId: String): Boolean
+     deleteGenre(genreCode: String): Boolean
+}
+
+############
+
+input BookInput {
+     bookId: String
+     genreCode: String
+     bookName: String
+}
+
+input GenreInput {
+     genreCode: String
+     genreMainCategory: String
+     genreSubCategory: String
+}
+
+############
+
+type Book {
+     bookId: String
+     genreCode: String
+     genreMainCategory: String
+     genreSubCategory: String
+     bookName: String
+     updatedAt: String
+     createdAt: String
+}
+
+type Genre {
+     genreCode: String
+     genreMainCategory: String
+     genreSubCategory: String
+}
+

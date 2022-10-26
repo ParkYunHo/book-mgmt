@@ -9,4 +9,9 @@ class CommCode {
         BOOK("book"),
         GENRE("genre")
     }
+
+    enum class Request(val code: String){
+        REST("rest"),
+        GRAPHQL("graphql")
+    }
 }

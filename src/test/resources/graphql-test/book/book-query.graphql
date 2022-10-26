@@ -1,0 +1,12 @@
+
+query findBook($bookId: String) {
+     findBook(bookId: $bookId){
+          bookId
+          genreCode
+          genreMainCategory
+          genreSubCategory
+          bookName
+          updatedAt
+          createdAt
+     }
+}

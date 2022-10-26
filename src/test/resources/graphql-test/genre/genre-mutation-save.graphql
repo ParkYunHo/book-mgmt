@@ -1,0 +1,8 @@
+
+mutation saveGenre($input: GenreInput){
+     saveGenre(input: $input){
+          genreCode
+          genreMainCategory
+          genreSubCategory
+     }
+}
