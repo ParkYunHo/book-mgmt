@@ -34,9 +34,19 @@ dependencies {
     compileOnly("org.projectlombok:lombok")
     runtimeOnly("com.h2database:h2")
     annotationProcessor("org.projectlombok:lombok")
+
+    // Cucumber
+    testImplementation("io.cucumber:cucumber-java:7.5.0")
+    testImplementation("io.cucumber:cucumber-spring:7.5.0")
+    testImplementation("io.cucumber:cucumber-junit-platform-engine:7.5.0")
+    testImplementation("org.junit.platform:junit-platform-suite-api")
+
+    // Graphql
+    testImplementation("org.springframework.graphql:spring-graphql-test")
+
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework:spring-webflux")
-    testImplementation("org.springframework.graphql:spring-graphql-test")
+
 }
 
 tasks.withType<KotlinCompile> {
