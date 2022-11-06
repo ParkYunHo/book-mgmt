@@ -34,6 +34,8 @@ dependencies {
     compileOnly("org.projectlombok:lombok")
     runtimeOnly("com.h2database:h2")
     annotationProcessor("org.projectlombok:lombok")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework:spring-webflux")
 
     // Cucumber
     testImplementation("io.cucumber:cucumber-java:7.5.0")
@@ -44,15 +46,23 @@ dependencies {
     // Graphql
     testImplementation("org.springframework.graphql:spring-graphql-test")
 
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("org.springframework:spring-webflux")
-
+    // Karate
+    testImplementation("com.intuit.karate:karate-junit5:1.0.1")
 }
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         freeCompilerArgs = listOf("-Xjsr305=strict")
         jvmTarget = "11"
+    }
+}
+
+// resource directory to upload files karate
+sourceSets {
+    test {
+        resources {
+            srcDirs("src/test/kotlin")
+        }
     }
 }
 
