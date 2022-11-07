@@ -1,8 +1,12 @@
+//import jdk.nashorn.internal.objects.NativeRegExp.test
+//import org.jetbrains.kotlin.contracts.model.structure.UNKNOWN_COMPUTATION.type
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("org.springframework.boot") version "2.7.5"
     id("io.spring.dependency-management") version "1.0.15.RELEASE"
+    id("org.asciidoctor.jvm.convert") version "3.3.2"
+//    id("org.asciidoctor.convert") version "1.5.8"
 
     kotlin("jvm") version "1.6.21"
     kotlin("plugin.spring") version "1.6.21"
@@ -52,25 +56,59 @@ dependencies {
     testImplementation("com.intuit.karate:karate-junit5:1.0.1")
 
     // Spring Rest Docs
-//    testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
+    testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
+    testImplementation("org.springframework.restdocs:spring-restdocs-asciidoctor")
+//    asciidoctor("org.springframework.restdocs:spring-restdocs-asciidoctor")
 }
 
-tasks.withType<KotlinCompile> {
-    kotlinOptions {
-        freeCompilerArgs = listOf("-Xjsr305=strict")
-        jvmTarget = "11"
-    }
+/* TEST코드 실행시 */
+//sourceSets {
+//    test {
+//        resources {
+//            srcDirs("src/test/kotlin")
+//        }
+//    }
+//}
+//
+//tasks.withType<KotlinCompile> {
+//    kotlinOptions {
+//        freeCompilerArgs = listOf("-Xjsr305=strict")
+//        jvmTarget = "11"
+//    }
+//}
+//
+//tasks.withType<Test> {
+//    useJUnitPlatform()
+//}
+
+/* Spring Rest Docs 생성시(gradle build시) */
+val snippetsDir by extra { file("build/generated-snippets") }
+
+tasks.test {
+    outputs.dir(snippetsDir)
 }
 
-// resource directory to upload files karate
-sourceSets {
-    test {
-        resources {
-            srcDirs("src/test/kotlin")
-        }
-    }
+tasks.asciidoctor {
+    dependsOn(tasks.test)
+    inputs.dir(snippetsDir)
 }
 
-tasks.withType<Test> {
-    useJUnitPlatform()
+tasks.register("copyHTML", Copy::class) {
+    dependsOn(tasks.asciidoctor)
+    from(file("build/docs/asciidoc"))
+    into(file("src/main/resources/static/docs"))
+}
+
+tasks.build {
+    dependsOn(tasks.getByName("copyHTML"))
+}
+
+tasks.jar {
+    enabled = false
+}
+
+tasks.bootJar {
+    enabled = true
+    dependsOn(tasks.asciidoctor)
+    dependsOn(tasks.getByName("copyHTML"))
 }
