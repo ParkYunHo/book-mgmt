@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     id("org.springframework.boot") version "2.7.5"
     id("io.spring.dependency-management") version "1.0.15.RELEASE"
+
     kotlin("jvm") version "1.6.21"
     kotlin("plugin.spring") version "1.6.21"
     kotlin("plugin.jpa") version "1.6.21"
@@ -30,6 +31,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("com.querydsl:querydsl-jpa:5.0.0")
+    implementation("org.springdoc:springdoc-openapi-ui:1.6.9")
 
     compileOnly("org.projectlombok:lombok")
     runtimeOnly("com.h2database:h2")
@@ -48,6 +50,9 @@ dependencies {
 
     // Karate
     testImplementation("com.intuit.karate:karate-junit5:1.0.1")
+
+    // Spring Rest Docs
+//    testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
 }
 
 tasks.withType<KotlinCompile> {
