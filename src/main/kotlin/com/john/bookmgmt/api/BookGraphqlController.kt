@@ -20,6 +20,15 @@ import org.springframework.web.bind.annotation.RestController
 class BookGraphqlController(
     private val bookService: BookService
 ) {
+
+    /**
+     * 도서정보 조회 (Graphql)
+     *
+     * @param bookId [String]
+     * @return response [BookDto]
+     * @author yoonho
+     * @since 2022.11.09
+     */
     @QueryMapping
     fun findBook(@Argument bookId: String?): BookDto {
         if(bookId.isNullOrBlank()){
@@ -29,6 +38,14 @@ class BookGraphqlController(
         return bookService.findBook(bookId, CommCode.Request.GRAPHQL)
     }
 
+    /**
+     * 장르정보 조회 (Graphql)
+     *
+     * @param genreCode [String]
+     * @return response [GenreDto]
+     * @author yoonho
+     * @since 2022.11.09
+     */
     @QueryMapping
     fun findGenre(@Argument genreCode: String?): GenreDto {
         if(genreCode.isNullOrBlank()){
@@ -38,6 +55,14 @@ class BookGraphqlController(
         return bookService.findGenre(genreCode, CommCode.Request.GRAPHQL)
     }
 
+    /**
+     * 도서정보 저장 (Graphql)
+     *
+     * @param input [BookDto]
+     * @return response [BookDto]
+     * @author yoonho
+     * @since 2022.11.09
+     */
     @MutationMapping
     fun saveBook(@Argument input: BookDto?): BookDto {
         if(input == null){
@@ -47,6 +72,14 @@ class BookGraphqlController(
         return bookService.saveBook(input, CommCode.Request.GRAPHQL)
     }
 
+    /**
+     * 장르정보 저장 (Graphql)
+     *
+     * @param input [GenreDto]
+     * @return response [GenreDto]
+     * @author yoonho
+     * @since 2022.11.09
+     */
     @MutationMapping
     fun saveGenre(@Argument input: GenreDto?): GenreDto {
         if(input == null){
@@ -56,6 +89,14 @@ class BookGraphqlController(
         return bookService.saveGenre(input, CommCode.Request.GRAPHQL)
     }
 
+    /**
+     * 도서정보 삭제 (Graphql)
+     *
+     * @param bookId [String]
+     * @return response [Boolean]
+     * @author yoonho
+     * @since 2022.11.09
+     */
     @MutationMapping
     fun deleteBook(@Argument bookId: String?): Boolean {
         if(bookId.isNullOrBlank()){
@@ -66,6 +107,14 @@ class BookGraphqlController(
         return true
     }
 
+    /**
+     * 장르정보 삭제 (Graphql)
+     *
+     * @param genreCode [String]
+     * @return response [Boolean]
+     * @author yoonho
+     * @since 2022.11.09
+     */
     @MutationMapping
     fun deleteGenre(@Argument genreCode: String?): Boolean {
         if(genreCode.isNullOrBlank()){
