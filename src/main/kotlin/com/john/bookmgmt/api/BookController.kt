@@ -20,6 +20,15 @@ class BookController(
     private val bookService: BookService
 ) {
 
+    /**
+     * 도서정보 조회 (API)
+     *
+     * @param type [String]
+     * @param id [String]
+     * @return BaseResponse [BaseResponse]
+     * @author yoonho
+     * @since 2022.11.09
+     */
     @Operation(summary = "도서정보 조회")
     @GetMapping("/api/{type}")
     fun find(@PathVariable("type") type: String, @RequestParam id: String): BaseResponse {
@@ -36,6 +45,15 @@ class BookController(
         return BaseResponse().success(response)
     }
 
+    /**
+     * 도서정보 삭제 (API)
+     *
+     * @param type [String]
+     * @param id [String]
+     * @return BaseResponse [BaseResponse]
+     * @author yoonho
+     * @since 2022.11.09
+     */
     @Operation(summary = "도서정보 삭제")
     @DeleteMapping("/api/{type}")
     fun delete(@PathVariable("type") type: String, @RequestParam id: String): BaseResponse {
@@ -51,12 +69,28 @@ class BookController(
         return BaseResponse().successNoContent()
     }
 
+    /**
+     * 도서정보 저장 (API)
+     *
+     * @param input [BookDto]
+     * @return BaseResponse [BaseResponse]
+     * @author yoonho
+     * @since 2022.11.09
+     */
     @Operation(summary = "도서정보 저장")
     @PostMapping("/api/book")
     fun saveBook(@RequestBody input: BookDto): BaseResponse {
         return BaseResponse().success(bookService.saveBook(input, CommCode.Request.REST))
     }
 
+    /**
+     * 장르정보 저장 (API)
+     *
+     * @param input [GenreDto]
+     * @return BaseResponse [BaseResponse]
+     * @author yoonho
+     * @since 2022.11.09
+     */
     @Operation(summary = "장르정보 저장")
     @PostMapping("/api/genre")
     fun saveGenre(@RequestBody input: GenreDto): BaseResponse {

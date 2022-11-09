@@ -8,6 +8,10 @@ import org.springframework.graphql.execution.DataFetcherExceptionResolverAdapter
 import org.springframework.graphql.execution.ErrorType
 import org.springframework.stereotype.Component
 
+/**
+ * @author yoonho
+ * @since 2022.10.26
+ */
 @Component
 class GraphQLExceptionResolver: DataFetcherExceptionResolverAdapter() {
     override fun resolveToSingleError(ex: Throwable, env: DataFetchingEnvironment): GraphQLError? {
