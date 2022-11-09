@@ -62,53 +62,53 @@ dependencies {
 }
 
 /* TEST코드 실행시 */
-//sourceSets {
-//    test {
-//        resources {
-//            srcDirs("src/test/kotlin")
-//        }
-//    }
-//}
-//
-//tasks.withType<KotlinCompile> {
-//    kotlinOptions {
-//        freeCompilerArgs = listOf("-Xjsr305=strict")
-//        jvmTarget = "11"
-//    }
-//}
-//
-//tasks.withType<Test> {
-//    useJUnitPlatform()
-//}
+sourceSets {
+    test {
+        resources {
+            srcDirs("src/test/kotlin")
+        }
+    }
+}
+
+tasks.withType<KotlinCompile> {
+    kotlinOptions {
+        freeCompilerArgs = listOf("-Xjsr305=strict")
+        jvmTarget = "11"
+    }
+}
+
+tasks.withType<Test> {
+    useJUnitPlatform()
+}
 
 /* Spring Rest Docs 생성시(gradle build시) */
-val snippetsDir by extra { file("build/generated-snippets") }
-
-tasks.test {
-    outputs.dir(snippetsDir)
-}
-
-tasks.asciidoctor {
-    dependsOn(tasks.test)
-    inputs.dir(snippetsDir)
-}
-
-tasks.register("copyHTML", Copy::class) {
-    dependsOn(tasks.asciidoctor)
-    from(file("build/docs/asciidoc"))
-    into(file("src/main/resources/static/docs"))
-}
-
-tasks.build {
-    dependsOn(tasks.getByName("copyHTML"))
-}
-
-tasks.jar {
-    enabled = false
-}
-
-tasks.bootJar {
-    enabled = true
-    dependsOn(tasks.asciidoctor)
-    dependsOn(tasks.getByName("copyHTML"))
-}
+//val snippetsDir by extra { file("build/generated-snippets") }
+//
+//tasks.test {
+//    outputs.dir(snippetsDir)
+//}
+//
+//tasks.asciidoctor {
+//    dependsOn(tasks.test)
+//    inputs.dir(snippetsDir)
+//}
+//
+//tasks.register("copyHTML", Copy::class) {
+//    dependsOn(tasks.asciidoctor)
+//    from(file("build/docs/asciidoc"))
+//    into(file("src/main/resources/static/docs"))
+//}
+//
+//tasks.build {
+//    dependsOn(tasks.getByName("copyHTML"))
+//}
+//
+//tasks.jar {
+//    enabled = false
+//}
+//
+//tasks.bootJar {
+//    enabled = true
+//    dependsOn(tasks.asciidoctor)
+//    dependsOn(tasks.getByName("copyHTML"))
+//}
